@@ -1,73 +1,79 @@
-Modulo Python ad alte prestazioni per il calcolo della funzione sigmoid, implementato in C++ e integrato in Python tramite pybind11.
-# Requisiti
+High-performance Python module for calculating the sigmoid function, implemented in C++ and integrated into Python via pybind11.
+# Requirements
 
     Python ≥ 3.6
+    pybind11 installed (pip install pybind11)
+    A C++17 compatible compiler (MSVC on Windows, g++ on Linux/macOS)
 
-    pybind11 installato (pip install pybind11)
-
-    Un compilatore C++ compatibile con C++17 (MSVC su Windows, g++ su Linux/macOS)
-
-# Struttura del progetto
+# Project Structure
 
     sigmoid_project/
-    ├── build
+    ├── build/
     ├── sigmoid/
-    │   └── __pycache__
-        └── __init__.py
-        └── cpp_sigmoid.pyd
-        └── cpp_sigmoid.cpp        # Codice C++ con la funzione sigmoid
-    │
-    ├── cpp_sigmoid.cp310-win_amd64.pyd
-    ├── setup.py                   # Script di build Python per pybind11
-    ├── test.py                    # Script Python per testare il modulo
+    │   ├── __pycache__/
+    │   ├── __init__.py
+    │   └── cpp_sigmoid.pyd   # Compiled C++ module (Windows)
+    │   └── cpp_sigmoid.cpp   # C++ code with the sigmoid function
+    ├── cpp_sigmoid.cp310-win_amd64.pyd  # Example of compiled module outside `sigmoid/`
+    ├── setup.py              # Python build script for pybind11
+    └── test.py               # Python script to test the module
 
-# Compilazione
+# Compilation
 
-Apri il terminale nella directory del progetto (dove si trova setup.py) e lancia:
+Open your terminal in the project directory (where setup.py is located) and run:
+
+    Bash
 
     python setup.py build_ext --inplace
 
-Questo genererà un file .pyd (su Windows) o .so (su Linux/macOS) direttamente nella cartella corrente, ad esempio:
+This will generate a .pyd file (on Windows) or .so file (on Linux/macOS) directly in the current folder, for example:
 
     cpp_sigmoid.cp310-win_amd64.pyd
 
-Può anche comparire dentro la cartella sigmoid/ se specificato nel modulo.
-# Test
+It might also appear inside the sigmoid/ folder if specified in the module.
+Testing
 
-Puoi testare il modulo con lo script test.py:
+You can test the module with the test.py script:
+Python
 
-    test.py
-    
-    import cpp_sigmoid  # oppure from sigmoid import cpp_sigmoid se è in sottocartella
+    import cpp_sigmoid  # or from sigmoid import cpp_sigmoid if in a subfolder
     import numpy as np
-
+    
     x = np.array([0.0, 1.0, 2.0])
     y = cpp_sigmoid.sigmoid(x)
     print("Output:", y)
 
-Lancialo con:
+Run it with:
+
+    Bash
 
     python test.py
 
-Assicurati che il file .pyd sia nella stessa directory di test.py o che il modulo sia correttamente installato nel tuo ambiente.
-# Note
+Ensure the .pyd file is in the same directory as test.py or that the module is correctly installed in your environment.
+Notes
 
-    Il nome del modulo deve combaciare con quello definito nel file C++:
+    The module name must match the one defined in the C++ file:
+    C++
 
     PYBIND11_MODULE(cpp_sigmoid, m)
 
-Se vedi errori su Python.h o pybind11/pybind11.h, verifica che pybind11 sia installato:
+If you see errors related to Python.h or pybind11/pybind11.h, verify that pybind11 is installed:
 
+    Bash
+    
     pip install pybind11
 
-Puoi trovare il path degli header con:
+You can find the header path with:
+Python
 
     import pybind11
     print(pybind11.get_include())
 
-# Risultati
+# Results
+
     Python time: 0.017642736434936523
     C++ time: 0.00238037109375
     Results close: True
-    
-*Autore: Giacomo Visciotti*
+
+*Author: Giacomo Visciotti*
+
