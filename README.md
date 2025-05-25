@@ -64,3 +64,10 @@ Puoi trovare il path degli header con:
 
     import pybind11
     print(pybind11.get_include())
+
+# Risultati
+    Python time: 0.017642736434936523
+    C++ time: 0.00238037109375
+    Results close: True
+    
+*Autore: Giacomo Visciotti*
